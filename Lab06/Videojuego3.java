@@ -42,6 +42,7 @@ public class Videojuego3 {
     mostrarRankingPorBurbuja(soldados2);
 
     System.out.println("\n"+ejercitoGanador(soldados1, soldados2)+"\n");
+    sc.close();
 
   }
   public static ArrayList<Soldado> crearEjercito (Random random, 

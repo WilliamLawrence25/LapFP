@@ -18,6 +18,10 @@ public class Videojuego4 {
 
     mostrarTablero(tablero);
 
+
+
+
+    sc.close();
   }
   public static ArrayList<Soldado> crearEjercito (Random random, 
   ArrayList<ArrayList<Soldado>> tablero, String n){
