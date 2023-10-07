@@ -1,7 +1,7 @@
 package LabFP.Lab07;
 
 public class Soldado {
-  private String nombre="";
+  private String nombre;
   private int vida;
   private int fila;
   private int columna;

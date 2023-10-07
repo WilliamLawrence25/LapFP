@@ -57,7 +57,6 @@ public class Videojuego4 {
       }
       System.out.println("|");
     }
-    System.out.println();
     
   }
 }

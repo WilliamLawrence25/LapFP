@@ -25,9 +25,9 @@ public class Videojuego3 {
 
     System.out.println("Promedio de nivel de vida: "+promedioVida(soldados1));
     mostrarSoldados(soldados1);
-    System.out.print("\nRANKING DE PODER(SELECCION)");
+    System.out.print("\nRANKING DE PODER (SELECCION)");
     mostrarRankingPorSeleccion(soldados1);
-    System.out.print("\nRANKING DE PODER(BURBUJA)");
+    System.out.print("\nRANKING DE PODER (BURBUJA)");
     mostrarRankingPorBurbuja(soldados1);
 
     System.out.println("\n\n-----Ejercito Nro2(X)----");

@@ -32,9 +32,9 @@ public class VideoJuego2 {
     System.out.println("Nivel de vida total del Ejercito: "+vidaEjercito(soldados));
 
     mostrarSoldados(soldados);
-    System.out.print("\nRANKING DE PODER(SELECCION)");
+    System.out.print("\nRANKING DE PODER (SELECCION)");
     mostrarRankingPorSeleccion(soldados);
-    System.out.print("\nRANKING DE PODER(BURBUJA)");
+    System.out.print("\nRANKING DE PODER (BURBUJA)");
     mostrarRankingPorBurbuja(soldados);
     sc.close();
   }
