@@ -10,7 +10,7 @@ public class VideoJuego2 {
     for(int i=0; i<soldados.length; i++){
       nombre="S"+(i);
       vida=random.nextInt(5)+1;
-      do{
+      do{ 
         fila=random.nextInt(10);
         columna=random.nextInt(10);
       }while(tablero[fila][columna]!=null);
