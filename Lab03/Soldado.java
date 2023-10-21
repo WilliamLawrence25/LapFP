@@ -1,3 +1,5 @@
+package LabFP.Lab03;
+
 public class Soldado {
   private String nombre;
   private int vida;

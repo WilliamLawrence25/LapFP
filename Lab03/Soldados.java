@@ -1,3 +1,5 @@
+package LabFP.Lab03;
+
 import java.util.*;
 
 public class Soldados {

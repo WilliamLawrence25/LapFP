@@ -1,3 +1,4 @@
+package LabFP.Lab03;
 public class Nave {
     private String nombre;
     private int fila;

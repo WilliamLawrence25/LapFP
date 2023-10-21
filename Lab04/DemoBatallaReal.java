@@ -1,3 +1,5 @@
+package LabFP.Lab04;
+
 import java.util.*;
 public class DemoBatallaReal {
     public static void main(String[] args){

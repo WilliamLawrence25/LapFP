@@ -1,3 +1,5 @@
+package LabFP.Lab05;
+
 import java.util.*;
 public class VideoJuego2 {
   public static void main(String[] args){
