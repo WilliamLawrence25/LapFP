@@ -5,15 +5,18 @@ public class Videojuego {
   private static final int MAX_SOLDADOS=10;
   private static final String SIMBOL_EJERCITO1="Z";
   private static final String SIMBOL_EJERCITO2="X";
+  private static final int OPCION_RAPIDO = 1;
+  private static final int OPCION_PERSONALIZADO = 2;
+  private static final int OPCION_SALIR = 3;
   public static void main(String[] args){
     Scanner sc=new Scanner(System.in);
     Random random=new Random();
     boolean jugar=true;
     while(jugar){
       System.out.println("\n----------BIENVENIDO A BATTLEFIELD'S GAME----------\n\nMenu:\n1. Juego rapido\n2. Juego personalizado\n3. Salir");
-      String opcion=sc.next();
+      int opcion=sc.nextInt();
       switch (opcion) {
-        case "1":
+        case OPCION_RAPIDO:
           do{
             Soldado[][] tablero=new Soldado[MAX_SOLDADOS][MAX_SOLDADOS];
             HashMap<Integer, Soldado> soldados1=crearEjercito(random, tablero, SIMBOL_EJERCITO1);
@@ -25,7 +28,7 @@ public class Videojuego {
 
           }while(seguirJugando(sc));
           break;
-        case "2":
+        case OPCION_PERSONALIZADO:
           do{
             Soldado[][] tablero=new Soldado[10][10];
             HashMap<Integer, Soldado> soldados1=crearEjercito(random, tablero, SIMBOL_EJERCITO1);
@@ -44,7 +47,7 @@ public class Videojuego {
             
           }while(seguirJugando(sc));
           break;
-        case "3":
+        case OPCION_SALIR:
          jugar=false;
          break;
         default:
@@ -96,7 +99,7 @@ public class Videojuego {
     System.out.print("\nRANKING DE PODER (SELECCION)");
     mostrarRankingPorSeleccion(soldados1);
 
-    System.out.printf("\n\n---------Ejercito Nro2(%s)--------\\n", SIMBOL_EJERCITO2);
+    System.out.printf("\n\n---------Ejercito Nro2(%s)--------\n", SIMBOL_EJERCITO2);
     System.out.println("-Soldado con mayor nivel de vida-");
     System.out.println("Nombre: "+soldadoMasFuerte(soldados2).getNombre());
     System.out.println("Nvl Vida: " + soldadoMasFuerte(soldados1).getNivelVida());
@@ -124,6 +127,8 @@ public class Videojuego {
       int control1=sc.nextInt();
       realizarAccion(mySoldado1, sc, control1, soldados1, soldados2, tablero);
       soldadosRestantes(soldados1, soldados2);
+      mostrarSoldados(soldados1);
+      mostrarSoldados(soldados2);
 
       if(soldados2.size()>0 && soldados1.size()>0){
         Soldado mySoldado2=null;
@@ -139,6 +144,8 @@ public class Videojuego {
         int control2=sc.nextInt();
         realizarAccion(mySoldado2, sc, control2, soldados2, soldados1, tablero);
         soldadosRestantes(soldados1, soldados2);
+        mostrarSoldados(soldados1);
+        mostrarSoldados(soldados2);
       }
       if(soldados2.size()==0){
         System.out.println("\nJugador 1 GANA!!!\n");
@@ -200,7 +207,7 @@ public class Videojuego {
     for(Soldado soldado:soldados2.values())
       if(soldado!=null)
         s2++;
-    System.out.println("Ejercito 1 - Soldados restantes: "+s1);
+    System.out.println("\nEjercito 1 - Soldados restantes: "+s1);
     System.out.println("Ejercito 2 - Soldados restantes: "+s2);
   }
   public static boolean seguirJugando(Scanner sc){
@@ -256,9 +263,11 @@ public class Videojuego {
             System.out.println("*Enemigo derrotado*");
             tablero[fila0][columna0]=soldado;
             tablero[soldado.getFila()][soldado.getColumna()]=null;
+            soldado.setFila(fila0);
+            soldado.setColumna(columna0);
             soldado.actualizarVida(1);
             eliminarSoldado(enemigo, soldadosE);
-          }else{
+          }else if(ganador>soldado.getvidaActual()){
             System.out.println("*Aliado derrotado*");
             tablero[soldado.getFila()][soldado.getColumna()]=null;
             eliminarSoldado(soldado, soldados);
@@ -381,7 +390,7 @@ public class Videojuego {
             String s2i=sc.next();
             Soldado s1I=buscarSoldado(s1i, soldados);
             Soldado s2I=buscarSoldado(s2i, soldados);
-            soldados.get(encontrarClave(soldados, s1I)).IntercambiarDatos(soldados.get(encontrarClave(soldados, s2I)));
+            soldados.get(encontrarClave(soldados, s1I)).intercambiarDatos(soldados.get(encontrarClave(soldados, s2I)));
             System.out.println("*Intercambio realizado*");
             break;
           case 7:

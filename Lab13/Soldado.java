@@ -130,7 +130,7 @@ public class Soldado {
   public void morir() {
     this.vive=false;
   }
-  public void IntercambiarDatos(Soldado s2){
+  public void intercambiarDatos(Soldado s2){
     int tempVida=this.nivelVida;
     int tempAtq=this.nivelAtaque;
     int tempDef=this.nivelDefensa;
