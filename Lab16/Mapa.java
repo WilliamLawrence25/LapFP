@@ -48,7 +48,7 @@ public class Mapa {
     System.out.println("\nTablero de ejercitos");
     System.out.print(" ___________________________________________________________\n");
     for(Ejercito[] fila: this.tableroReinos){
-      int i=0;
+      //int i=0;
       for(Ejercito columna: fila){
         if(columna==null){
           System.out.print("|_____");
@@ -56,7 +56,7 @@ public class Mapa {
           String vida = String.format("%02d", columna.vidaTotalEjercito());
           System.out.print("|"+columna.getNombreEjercito()+"-"+vida);
         }
-        i++;
+        //i++;
         /*if(i==fila.length){
           System.out.print("\n|     |     |     |     |     |     |     |     |     |     |     |     \n");
         }*/
