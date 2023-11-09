@@ -7,6 +7,7 @@ public class Ejercito{
   private final int MAX_SOLDADOS=10;
   private int fila, columna;
   private String reino;
+  private int totalSoldados;
   
   public void setNombreEjercito(String nombre){
     nombreEjercito=nombre;
@@ -29,12 +30,16 @@ public class Ejercito{
   public HashMap<Integer, Soldado> iterar(){
     return this.misSoldados;
   }
+  public int getTotalSoldados(){
+    this.totalSoldados=this.misSoldados.size();
+    return this.totalSoldados;
+  }
   //Ejercito personalizado
-  public Ejercito( String n, String nombreE){
+  public Ejercito(String n, String nombreE){
     Random random=new Random();
     setNombreEjercito(nombreE);
     misSoldados=new HashMap<>();
-    for(int i=0; i<random.nextInt(MAX_SOLDADOS)+1; i++){
+    for(int i=0; i<random.nextInt(MAX_SOLDADOS-2)+3; i++){//para evitar un ejercito vacio
       Soldado soldado=new Soldado(i, n);
       misSoldados.put(i, soldado);
     }
@@ -44,7 +49,7 @@ public class Ejercito{
     Random random=new Random();
     setNombreEjercito("Ejercito Generico");
     misSoldados=new HashMap<>();
-    for(int i=0; i<random.nextInt(MAX_SOLDADOS)+1; i++){
+    for(int i=0; i<random.nextInt(MAX_SOLDADOS-2)+3; i++){//para evitar un ejercito vacio
       Soldado soldado=new Soldado();
       misSoldados.put(i, soldado);
     }
@@ -60,6 +65,12 @@ public class Ejercito{
     int total=0;
     for(int i=0; i<misSoldados.size(); i++)
       total=total+misSoldados.get(i).getNivelVida();
+    return total;
+  }
+  public int ataqueTotalEjercito(){
+    int total=0;
+    for(int i=0; i<misSoldados.size(); i++)
+      total=total+misSoldados.get(i).getNivelAtaque();
     return total;
   }
   public void setReino(String reino){
@@ -87,15 +98,15 @@ public class Ejercito{
   public static void agregarSoldado(Soldado[][] tablero, HashMap<Integer, Soldado> soldados, String n, Random random, Soldado s){
     int num=soldados.size()+1;
     Soldado soldado=new Soldado(num, n);
-    int fila, columna;
+    /*int fila, columna;
     do{
       fila=random.nextInt(10);
       columna=random.nextInt(10);
     }while(tablero[fila][columna]!= null);
     soldado.setFila(fila);
-    soldado.setColumna(columna);
+    soldado.setColumna(columna);*/
     soldados.put(num, soldado);
-    tablero[fila][columna]=soldado;
+    //tablero[fila][columna]=soldado;
 
   }
   public static Integer encontrarClave(HashMap<Integer, Soldado> soldados, Soldado soldado){
@@ -104,17 +115,35 @@ public class Ejercito{
         return entry.getKey();
     return null;
   }
-  public void modoPersonalizado(String n, Scanner sc, Soldado[][] tablero){
+  public Soldado soldadoMasFuerte(){
+    Soldado masFuerte=misSoldados.get(0);
+    for(int i=0; i<misSoldados.size(); i++)
+      if(misSoldados.get(i).getNivelVida()>masFuerte.getNivelVida())
+        masFuerte=misSoldados.get(i);
+    return masFuerte;
+  }
+  public void mostrarRankingPorSeleccion(){
+    Soldado temp=new Soldado();
+    for(int i=misSoldados.size(); i>0; i--)
+      for(int j=0; j<misSoldados.size()-1; j++)
+        if(misSoldados.get(j+1).getNivelVida()>misSoldados.get(j).getNivelVida()){
+          temp=misSoldados.get(j);
+          misSoldados.put(j, misSoldados.get(j+1));
+          misSoldados.put(j+1, temp);
+        }
+    mostrarSoldados(misSoldados);
+  }
+  public void modoPersonalizado(String n, Scanner sc){
     mostrarSoldados(misSoldados);
     Random random=new Random();
     boolean continuar=true;
     while(continuar==true){
-      System.out.println("Escoja\n1. Crear Soldado\n2. Eliminar Soldado\n3. Modificar Soldado\n4. Ver Soldado\n5. Ver ejercito\n6. Jugar");
+      System.out.println("Escoja\n1. Crear Soldado\n2. Eliminar Soldado\n3. Modificar Soldado\n4. Ver Soldado\n5. Ver ejercito\n6. Ranking de poder\n7. Soldado con mas ataque\n8. Jugar");
       int opcion=sc.nextInt();
       switch (opcion) {
         case 1:
           if(misSoldados.size()<MAX_SOLDADOS){
-            agregarSoldado(tablero, misSoldados, n, random, null);
+            agregarSoldado(null, misSoldados, n, random, null);
             System.out.println("\n*Soldado creado*");
           }else
             System.out.println("Ejercito completo, no es posible crear mas soldados");
@@ -124,7 +153,7 @@ public class Ejercito{
             System.out.print("\nIngrese soldado a eliminar: ");
             String s=sc.next();
             Soldado soldado=buscarSoldado(s, misSoldados);
-            tablero[soldado.getFila()][soldado.getColumna()]=null;
+            //tablero[soldado.getFila()][soldado.getColumna()]=null;
             eliminarSoldado(soldado, misSoldados);
           }else
             System.out.println("No es posible dejar un ejercito vacio");
@@ -169,6 +198,12 @@ public class Ejercito{
           mostrarSoldados(misSoldados);
           break;
         case 6:
+          System.out.println("-Soldado con mayor nivel de vida(mas fuerte)-");
+          System.out.println("Nombre: "+soldadoMasFuerte().getNombre());
+        case 7:
+          System.out.print("\nRANKING DE PODER");
+          mostrarRankingPorSeleccion();
+        case 8:
           continuar=false;
           break;
         default:
