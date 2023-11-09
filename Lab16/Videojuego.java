@@ -1,4 +1,4 @@
-package LabFP.Lab14;
+package LabFP.Lab16;
 import java.util.*;
 
 public class Videojuego {
@@ -25,6 +25,8 @@ public class Videojuego {
     boolean jugar=true;
     while(jugar){
       while(reino1.size()!=0&&reino2.size()!=0){
+        System.out.println("\nJugador 1: ");
+        modificarEjercito(reino2, null, reinoJugador2, sc);
         Ejercito myEjercito1=null;
         while(myEjercito1==null){
           System.out.print("\nJugador 1, seleccione un ejercito: ");
@@ -68,7 +70,7 @@ public class Videojuego {
         fila=random.nextInt(10);
         columna=random.nextInt(10);
       }while(tableroReinos[fila][columna]!= null);
-      reino.put(i, new Ejercito(random, n, n+i));
+      reino.put(i, new Ejercito(n, n+i));
       reino.get(i).setFilaEjercito(fila);
       reino.get(i).setColumnaEjercito(columna);
       reino.get(i).setNombreEjercito(n+i);  
@@ -171,49 +173,14 @@ public class Videojuego {
     }else
       System.out.println("Coordenadas fuera del limite!!!");
   }
-  
-}
-
-
-class Ejercito{
-  private String nombreEjercito;
-  private HashMap<Integer, Soldado> ejercito;
-  private final int MAX_SOLDADOS=10;
-  private int fila, columna;
-  
-  public void setNombreEjercito(String nombre){
-    nombreEjercito=nombre;
-  }
-  public String getNombreEjercito(){
-    return nombreEjercito;
-  }
-  public void setFilaEjercito(int f){
-    fila = f;
-  }
-  public void setColumnaEjercito(int c){
-    columna = c;
-  }
-  public int getFilaEjercito(){
-    return fila;
-  }
-  public int getColumnaEjercito(){
-    return columna;
-  }
-  public HashMap<Integer, Soldado> iterar(){
-    return this.ejercito;
-  }
-  public Ejercito(Random random, String n, String nombreE){
-    setNombreEjercito(nombreE);
-    ejercito=new HashMap<>();
-    for(int i=0; i<random.nextInt(MAX_SOLDADOS)+1; i++){
-      Soldado soldado=new Soldado(i, n);
-      ejercito.put(i, soldado);
+  public static void modificarEjercito(HashMap<Integer, Ejercito> reino, Soldado[][] tablero, String n, Scanner sc){
+    System.out.println("Desea modificar algun ejercito?(si/no)");
+    String answer=sc.nextLine();
+    if(answer.equalsIgnoreCase("si")){
+      System.out.println("Escriba el ejercito a modificar");
+      String opcionMod=sc.nextLine();
+      Ejercito ejercitoMod=buscarEjercito(opcionMod, reino);
+      ejercitoMod.modoPersonalizado(n, sc, tablero);
     }
-  }
-  public int vidaTotalEjercito(){
-    int total=0;
-    for(int i=0; i<ejercito.size(); i++)
-      total=total+ejercito.get(i).getNivelVida();
-    return total;
   }
 }
