@@ -159,7 +159,7 @@ public class Videojuego {
           ejercito.setFilaEjercito(fila0);
           ejercito.setColumnaEjercito(columna0);
           eliminarEjercito(ejercitoE, reinoE);
-          //No se pude hacer que los nuevos datos de vida se actualizaran tambien en el tablero
+          //No se pudo hacer que los nuevos datos de vida se actualizaran tambien en el tablero
           for(Soldado s: mapa.tablero()[fila0][columna0].iterar().values())
             s.actualizarVida(1);
           /*for (Soldado s : ejercito.iterar().values())
