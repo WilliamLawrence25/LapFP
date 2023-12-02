@@ -171,8 +171,8 @@ class EspadachinReal extends Soldado{
   public void lanzarCuchillo(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroCuchillos++;
+    nivelEvolucion=nivelEvolucion+1;
+    numeroCuchillos=numeroCuchillos+1;
   }
 }
 class EspadachinTeutonico extends Espadachin{
@@ -190,8 +190,8 @@ class EspadachinTeutonico extends Espadachin{
   public void lanzarJabalina(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroJabalina++;
+    nivelEvolucion=nivelEvolucion+1;
+    numeroJabalina=numeroJabalina+1;
   }
 }
 class EspadachinConquistador extends Espadachin{
@@ -209,8 +209,8 @@ class EspadachinConquistador extends Espadachin{
   public void lanzarHacha(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroHachas++;
+    nivelEvolucion=nivelEvolucion+1;
+    numeroHachas=numeroHachas+1;
   }
 }
 class Arquero extends Soldado{
@@ -299,8 +299,8 @@ class CaballeroFranco extends Caballero{
   public void lanzarLanzas(){
   }
   public void aumentarNivel(){
-    numLanzas++;
-    nivelEvolucion++;
+    nivelEvolucion=nivelEvolucion+1;
+    numLanzas=numLanzas+1;
   }
 }
 class CaballeroMoro extends Caballero{
@@ -318,8 +318,8 @@ class CaballeroMoro extends Caballero{
   public void lanzarFechas(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroFlechas++;
+    nivelEvolucion=nivelEvolucion+1;
+    numeroFlechas=numeroFlechas+1;
   }
 }
 class Lancero extends Soldado{
