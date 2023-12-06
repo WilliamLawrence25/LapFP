@@ -30,7 +30,7 @@ public class Videojuego {
       mapa.mostrarTableroSoldados(tablero);
       reino1.get(0).mostrarSoldados();
       reino2.get(0).mostrarSoldados();
-
+      
       while(reino1.get(0).iterar().size()!=0&&reino2.get(0).iterar().size()!=0){
         Soldado mySoldado1=null;
         while(mySoldado1==null){

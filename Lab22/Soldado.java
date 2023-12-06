@@ -157,8 +157,8 @@ class Espadachin extends Soldado{
   }
 }
 class EspadachinReal extends Soldado{
-  private int numeroCuchillos;
-  private int nivelEvolucion;
+  //private int numeroCuchillos;
+  //private int nivelEvolucion;
   public EspadachinReal(String ejercito, int i){
     super(ejercito, i);
     super.setNivelVida(12);
@@ -171,13 +171,13 @@ class EspadachinReal extends Soldado{
   public void lanzarCuchillo(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroCuchillos++;
+    //nivelEvolucion++;
+    //numeroCuchillos++;
   }
 }
 class EspadachinTeutonico extends Espadachin{
-  private int numeroJabalina;
-  private int nivelEvolucion;
+  /*private int numeroJabalina;
+  private int nivelEvolucion;*/
   public EspadachinTeutonico(String ejercito, int i){
     super(ejercito, i);
     super.setNivelVida(13);
@@ -190,13 +190,13 @@ class EspadachinTeutonico extends Espadachin{
   public void lanzarJabalina(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroJabalina++;
+    /*nivelEvolucion++;
+    numeroJabalina++;*/
   }
 }
 class EspadachinConquistador extends Espadachin{
-  private int numeroHachas;
-  private int nivelEvolucion;
+  /*private int numeroHachas;
+  private int nivelEvolucion;*/
   public EspadachinConquistador(String ejercito, int i){
     super(ejercito, i);
     super.setNivelVida(14);
@@ -209,8 +209,8 @@ class EspadachinConquistador extends Espadachin{
   public void lanzarHacha(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroHachas++;
+    /*nivelEvolucion++;
+    numeroHachas++;*/
   }
 }
 class Arquero extends Soldado{
@@ -285,8 +285,8 @@ class Caballero extends Soldado{
   }
 }
 class CaballeroFranco extends Caballero{
-  private int numLanzas;
-  private int nivelEvolucion;
+  /*private int numLanzas;
+  private int nivelEvolucion;*/
   public CaballeroFranco(String ejercito, int i){
     super(ejercito, i);
     super.setNivelVida(15);
@@ -299,13 +299,13 @@ class CaballeroFranco extends Caballero{
   public void lanzarLanzas(){
   }
   public void aumentarNivel(){
-    numLanzas++;
-    nivelEvolucion++;
+    /*numLanzas++;
+    nivelEvolucion++;*/
   }
 }
 class CaballeroMoro extends Caballero{
-  private int numeroFlechas;
-  private int nivelEvolucion;
+  /*private int numeroFlechas;
+  private int nivelEvolucion;*/
   public CaballeroMoro(String ejercito, int i){
     super(ejercito, i);
     super.setNivelVida(13);
@@ -318,8 +318,8 @@ class CaballeroMoro extends Caballero{
   public void lanzarFechas(){
   }
   public void aumentarNivel(){
-    nivelEvolucion++;
-    numeroFlechas++;
+    /*nivelEvolucion++;
+    numeroFlechas++;*/
   }
 }
 class Lancero extends Soldado{
