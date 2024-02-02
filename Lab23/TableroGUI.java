@@ -36,7 +36,7 @@ public class TableroGUI extends JFrame {
 
       for (int fila = 0; fila < tablero.length; fila++) {
         for (int columna = 0 ; columna < tablero[fila].length; columna++) {
-          g.setColor(Color.LIGHT_GRAY);
+          g.setColor(Color.decode("#008744"));
           
           
           Soldado soldado = tablero[fila][columna];
@@ -45,22 +45,22 @@ public class TableroGUI extends JFrame {
             String nombre=soldado.getNombre();
 
             if((nombre.substring(nombre.length()-2, nombre.length()-1).equals("Z"))){
-              g.setColor(Color.CYAN);
+              g.setColor(Color.decode("#0057e7"));
             }else {
-              g.setColor(Color.ORANGE);
+              g.setColor(Color.decode("#d62d20"));
             }
               
           }
 
           g.fillRect(columna * celdaSize, fila * celdaSize, celdaSize, celdaSize);
-          g.setColor(Color.GRAY);
+          g.setColor(Color.decode("#ffa700"));
           g.drawRect(columna * celdaSize, fila * celdaSize, celdaSize, celdaSize);
 
           if(soldado!=null){
             String nombre=soldado.getNombre();
             String resultado=String.format("%s-%-4s",nombre.substring(nombre.length()-2, nombre.length()-1),soldado.getNombreCode());
 
-            g.setColor(Color.BLACK);
+            g.setColor(Color.WHITE);
             FontMetrics fm = g.getFontMetrics();
             int x = columna * celdaSize + (celdaSize - fm.stringWidth(resultado)) / 2;
             int y = fila * celdaSize + (celdaSize - fm.getHeight()) / 2 + fm.getAscent();

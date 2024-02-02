@@ -1,19 +1,16 @@
 package LabFP.Lab23;
-//import java.util.*;wha
+
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.SwingUtilities;
-/*import java.awt.Graphics;
-import javax.swing.JPanel;
-import javax.swing.JFrame;*/
-
 
 public class Videojuego {
   private static final int MAX_SOLDADOS=10;
   private static final String SIMBOL_EJERCITO1="Z";
   private static final String SIMBOL_EJERCITO2="X";
+  
   public static void main(String[] args){
     Scanner sc=new Scanner(System.in);
     Random random=new Random();
@@ -71,6 +68,20 @@ public class Videojuego {
         jugar=false;
     }
     sc.close();
+    // Obtener la instancia de Runtime
+    Runtime runtime = Runtime.getRuntime();
+
+    // Recolectar basura (garbage collection) para liberar memoria no utilizada
+    System.gc();
+
+    // Cantidad total de memoria disponible para el programa
+    long totalMemory = runtime.totalMemory() / (1024 * 1024);
+
+    // Cantidad de memoria actualmente en uso
+    long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024);
+
+    System.out.println("Memoria total: " + totalMemory + " MB");
+    System.out.println("Memoria utilizada: " + usedMemory + " MB");
   }
   public static ArrayList<Ejercito> crearReino(Mapa mapa, String n, String reinoN){
     Random random=new Random();
