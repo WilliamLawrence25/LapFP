@@ -1,9 +1,13 @@
 package LabFP.Lab24;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.SwingUtilities;
 import java.io.*;
 
@@ -53,7 +57,7 @@ public class Videojuego {
       preTablero(reino1.get(0), tablero);
       preTablero(reino2.get(0), tablero);
 
-      try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("LabFP\\Lab24\\reinos.dat"))) {
+      /*try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("LabFP\\Lab24\\reinos.dat"))) {
         oos.writeObject(reino1.get(0));
         oos.writeObject(reino2.get(0));
       } catch (IOException e) {
@@ -68,7 +72,7 @@ public class Videojuego {
         System.out.println("Ejército leído desde el archivo binario:");
       } catch (IOException | ClassNotFoundException e) {
         System.out.println("Error al leer desde el archivo binario: " + e.getMessage());
-      }
+      }*/
     
       mapa.mostrarTableroSoldados(tablero);
       reino1.get(0).mostrarSoldados();
@@ -96,6 +100,39 @@ public class Videojuego {
       reino1.get(0).resumenEjercito(reinoJugador1);
       reino2.get(0).resumenEjercito(reinoJugador2);
       determinarGanador(reino1.get(0), reino2.get(0), reinoJugador1, reinoJugador2);
+      
+
+      //JuegoDAO.insertarDatos("Inglaterra", 1, 9);
+
+      // Crear instancias de la clase para simular múltiples procesos o métodos
+      ArchivoLog archivoLog = new ArchivoLog();
+
+      // Iniciar hilos simulando ejecución de procesos
+      Thread thread1 = new Thread(() -> archivoLog.ejecutarQuerySQL());
+      Thread thread2 = new Thread(() -> archivoLog.muerteDeSoldado());
+      Thread thread3 = new Thread(() -> archivoLog.batallaTerminada());
+
+      thread1.start();
+      try {
+          thread1.join(); // Espera a que thread1 termine antes de iniciar thread2
+      } catch (InterruptedException e) {
+          e.printStackTrace();
+      }
+
+      thread2.start();
+      try {
+          thread2.join(); // Espera a que thread2 termine antes de iniciar thread3
+      } catch (InterruptedException e) {
+          e.printStackTrace();
+      }
+
+      thread3.start();
+      try {
+        thread3.join(); // Espera a que thread3 termine 
+      } catch (InterruptedException e) {
+          e.printStackTrace();
+      }
+
 
       System.out.println("Quieres seguir jugando?(true/false) ");
       boolean seguirJugando=sc.nextBoolean();
@@ -136,16 +173,6 @@ public class Videojuego {
       tablero[fila][columna]=s;
     }
   }
-  public static void eliminarSoldado(Soldado eliminar, ArrayList<Soldado> soldados) {
-    Iterator<Soldado> iterator = soldados.iterator();
-    while (iterator.hasNext()) {
-        Soldado entry = iterator.next();
-        if (entry.getNombre().equals(eliminar.getNombre())) {
-            iterator.remove();
-            break;
-        }
-    }
-  }
   public static double promedioVida(Ejercito ejercito){
     double promedio=0;
     for(Soldado soldado: ejercito.iterar())
@@ -168,71 +195,70 @@ public class Videojuego {
     }
     System.out.printf("\nEl ganador es el %s. Ya que al generar los\nporcentajes de probabilidad de victoria basada en los niveles de\nvida de sus soldados y aplicando un experimento aleatorio salió\nvencedor. (Aleatorio generado: %.2f%%)\n", ganador, numGanador);
   }
-  public static void realizarAccion(Soldado[][] tablero, Soldado soldado, ArrayList<Soldado> ejercito, ArrayList<Soldado> ejercitoE, Scanner sc){
-    Random random=new Random();
-    int fila=tablero.length;
-    int columna=tablero[0].length;
+}
 
-    System.out.print("Escriba coordenadas(fila, columna): ");
-    int fila0=sc.nextInt();
-    int columna0=sc.nextInt();
-    if(fila0>=0 && fila0<fila && columna0>=0 && columna0<columna){
-      if(tablero[fila0][columna0]!=null){
-        System.out.println("*Enemigo encontrado*");
-        Soldado soldadoE=tablero[fila0][columna0];
 
-        if(soldado instanceof Caballero || soldado instanceof CaballeroFranco || soldado instanceof CaballeroMoro){
-          if(soldadoE instanceof Arquero){
-            if(soldado instanceof CaballeroFranco || soldado instanceof CaballeroMoro){ 
-              soldado.actualizarVida(2);
-            }else{soldado.actualizarDefensa(1);}}
-          if(soldadoE instanceof Lancero){
-            soldadoE.actualizarVida(1);}
-          if(soldadoE instanceof Espadachin){
-            soldado.actualizarVida(1);}
-          if(soldadoE instanceof CaballeroFranco || soldadoE instanceof CaballeroMoro){
-            soldadoE.actualizarVida(1);}
+class ConexionBD {
+    private static final String URL = "jdbc:mysql://localhost:3306/GameData";
+    private static final String USUARIO = "root";
+    private static final String CONTRASEÑA = "root";
+
+    public static Connection obtenerConexion() {
+        Connection conexion = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
+            System.out.println("Conexión exitosa");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
-        if(soldado instanceof Espadachin || soldado instanceof EspadachinConquistador || soldado instanceof EspadachinReal){
-          if(soldadoE instanceof Lancero){
-            if(soldado instanceof EspadachinConquistador || soldado instanceof EspadachinReal){
-              soldado.actualizarVida(2);}
-            else{soldado.actualizarVida(1);}}
-          if(soldadoE instanceof EspadachinConquistador || soldadoE instanceof EspadachinReal){
-            soldadoE.actualizarVida(1);}
-        }
-        if(soldado instanceof Arquero){
-          if(soldadoE instanceof Lancero){
-            soldado.actualizarVida(1);}
-        }    
+        return conexion;
+    }
+}
 
-        double vida1=soldado.getvidaActual();
-        double vida2=soldadoE.getvidaActual();
-        System.out.println("Vida total de: "+soldado.getNombre()+"("+(int)vida1+")");
-        System.out.println("Vida total de: "+soldadoE.getNombre()+"("+(int)vida2+")");
-        int numGanador=(int)random.nextDouble(vida1+vida2)+1;
-        System.out.printf("Probabilidades de vencer: \n%s: %.2f%% | %s: %.2f%%\n", soldado.getNombre(),
-          (100/(vida1+vida2)*vida1), soldadoE.getNombre(), (100/(vida1+vida2)*vida2));
+class JuegoDAO {
+  private static final String INSERTAR_DATOS = "INSERT INTO gameplayStatus (ganador, soldados, soldadosEnemigos) VALUES (?, ?)";
 
-        if(numGanador<=vida1){
-          System.out.println("*Enemigo derrotado*");
-          tablero[fila0][columna0]=soldado;
-          tablero[soldado.getFila()][soldado.getColumna()]=null;
-          soldado.setFila(fila0);
-          soldado.setColumna(columna0);
-          soldado.actualizarVida(1);
-          eliminarSoldado(soldadoE, ejercitoE);
-          
-        }else if(numGanador>vida1){
-          System.out.println("*Aliado derrotado*");
-          tablero[soldado.getFila()][soldado.getColumna()]=null;
-          soldadoE.actualizarVida(1);
-          eliminarSoldado(soldado, ejercito);
-          
-        }
-      }else
-        System.out.println("No se encontro enemigos\n");
-    }else
-      System.out.println("Coordenadas fuera del limite!!!");
+  public static void insertarDatos(String valorCampo1, int valorCampo2, int valorCampo3) {
+      try (Connection conexion = ConexionBD.obtenerConexion();
+          PreparedStatement statement = conexion.prepareStatement(INSERTAR_DATOS)) {
+          statement.setString(1, valorCampo1);
+          statement.setInt(2, valorCampo2);
+          statement.setInt(3, valorCampo3);
+          statement.executeUpdate();
+          System.out.println("Datos insertados correctamente");
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+  }
+}
+
+class ArchivoLog {
+
+  private static final String ARCHIVO_LOG = "LabFP\\Lab24\\my_log_game.log";
+
+  // Método sincronizado para simular ejecución de querys SQL
+  public synchronized void ejecutarQuerySQL() {
+      escribirEnArchivo("Ejecucion de consulta SQL");
+  }
+
+  // Método sincronizado para simular muerte de soldado
+  public synchronized void muerteDeSoldado() {
+      escribirEnArchivo("Muerte de soldado");
+  }
+
+  // Método sincronizado para simular batalla terminada
+  public synchronized void batallaTerminada() {
+      escribirEnArchivo("Batalla terminada");
+  }
+
+  // Método para escribir en el archivo de ArchivoLog
+  public void escribirEnArchivo(String mensaje) {
+      try (FileWriter writer = new FileWriter(ARCHIVO_LOG, true)) {
+          writer.write(mensaje + "\n\n");
+          System.out.println("Escrito en el archivo: " + mensaje);
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
   }
 }
